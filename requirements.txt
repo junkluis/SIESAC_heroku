@@ -2,3 +2,4 @@ Pillow==6.2.2
 django
 djangorestframework
 pymysql
+whitenoise
