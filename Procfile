@@ -1,0 +1,1 @@
+web: gunicorn SIESAC.wsgi --log-file -

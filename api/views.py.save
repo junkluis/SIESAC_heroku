@@ -1,0 +1,218 @@
+from django.shortcuts import render
+from rest_framework import generics
+from rest_framework.response import Response
+from .serializers import *
+from .models import *
+from rest_framework.decorators import api_view
+from datetime import datetime
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+from django.core.mail import send_mail
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email.encoders import encode_base64
+from django.conf import settings
+from django.core import serializers
+from django.http import HttpResponse
+from django.http import JsonResponse
+from random import  randrange
+import qrcode
+import smtplib
+import mimetypes
+import json
+import os, smtplib
+class ProfesorCreate(generics.ListCreateAPIView):
+	queryset = Profesor.objects.all()
+	serializer_class = ProfesorSerializer
+
+	def perform_create(self, serializer):
+		serializer.save()
+
+class ProfesorEdit(generics.RetrieveUpdateDestroyAPIView):  
+    
+    queryset = Profesor.objects.all()
+    serializer_class = ProfesorSerializer
+
+
+
+class RegistrarEstudiante(generics.ListCreateAPIView):
+	queryset = Estudiante.objects.all()
+	serializer_class = EstudianteSerializer
+
+	def perform_create(self,serializer):
+		serializer.save()
+		enviarCorreoAlPelado(serializer.data)
+
+		print(serializer.data['correo'])
+
+
+
+def enviarCorreoAlPelado(data):
+
+	form_email = "pedro"
+	form_mensaje = "hola"
+	form_nombre = "b"
+	asunto = 'Form de contacto'
+	email_from = settings.EMAIL_HOST_USER
+
+	codigo = qrcode.make(data['codigo'])
+	archivo_imagen = open('codigosQR/'+data['matricula']+'.png', 'wb')
+	codigo.save(archivo_imagen)
+	archivo_imagen.close()
+
+	email_to = [data['correo']]
+	email_mensaje = "%s: %s enviado por %s" % (form_nombre, form_mensaje, form_email)
+
+	holi = send_mail(asunto,
+		email_mensaje,
+		email_from,
+		#como adjuntar una imagen
+		email_to,
+		fail_silently=False 
+	)
+
+	print(holi)
+
+
+@api_view(['GET', 'POST'])
+def RegistrarAsistencia(request):
+	data={}
+	curso = request.query_params.get('curso')
+	#curso = Curso.objects.get(codigo='telemac1')
+	relacionAsistenciaList = list(ListaEstudiante.objects.filter(curso=curso))
+	print(curso)
+	print(relacionAsistenciaList)
+	asistenciaLista = []
+	if request.method == 'POST':
+		data = request.data
+		data._mutable = True
+		print(data)
+		matricula = data['codigo']
+		print(matricula)
+		try:
+			for relacion in relacionAsistenciaList:
+				asistenciaLista.append(relacion.estudiante)
+				print(asistenciaLista)
+			#estudiante = Estudiante.objects.get(matricula=matricula)
+			#data["nombre"] = estudiante.nombre_completo
+			#asistencia = Asistencias(estudiante=estudiante ,curso=curso)
+			#asistencia.save()
+				print("cesar navas")
+		except Estudiante.DoesNotExist:
+			data["nombre"] = "NONE"
+			print("no cesar navas")
+			print(curso)
+		data["metodo"] = "POST"
+		print(datetime.now())
+		return Response(data)
+	else:
+		print("chao")
+		todos_asistentes = Asistencias.objects.all()
+		lista_asistentes = []
+		for x in todos_asistentes:
+		#	if(x.estudiante.nombre_completo not in lista_asistentes):
+				lista_asistentes.append(x.estudiante.nombre_completo)
+		data["asistentes"] = lista_asistentes
+		data["metodo"] = "NO POST"
+		return Response(data)
+
+
+
+@api_view(['GET', 'POST'])
+def CorreosAtodos(request):
+	data={}
+	#data["dato curioso"] = "los negritos no se queman"
+
+	#CODIGO DE PRUEBA	
+	form_email = "pedro"
+	form_mensaje = "hola"
+	form_nombre = "b"
+	asunto = 'Form de contacto'
+	todos_estudiantes = Estudiante.objects.all()
+
+	
+	for estudiante in todos_estudiantes:
+		
+		email_from = settings.EMAIL_HOST_USER
+
+		password = settings.EMAIL_HOST_PASSWORD
+		gmail = smtplib.SMTP(settings.EMAIL_HOST, settings.EMAIL_PORT)
+		gmail.starttls()
+		gmail.login(email_from, password)
+		gmail.set_debuglevel(1)
+		mensaje = '<h1>logo</h1>'
+
+		codigo = qrcode.make(estudiante.codigo)
+		archivo_imagen = open('codigosQR/'+estudiante.matricula+'.png', 'wb')
+		codigo.save(archivo_imagen)
+		archivo_imagen.close()
+
+		email_to = estudiante.correo
+
+		print("-"*20)
+		print(email_to)
+		print("-"*20)
+
+		header = MIMEMultipart()
+		header['Subject'] = asunto
+		header['From'] = email_from
+		header['To'] = email_to
+
+		mensaje = MIMEText(mensaje, 'html')
+		header.attach(mensaje)
+		archivo = os.path.join('codigosQR/'+estudiante.matricula+'.png')
+
+		if (os.path.isfile(archivo)):
+			adjunto = MIMEBase('application', 'octet-stream')
+			adjunto.set_payload(open(archivo,"rb").read())
+			encode_base64(adjunto)
+			adjunto.add_header('content-Disposition', 'attachment; filename="%s"' % os.path.basename(archivo))
+			header.attach(adjunto)
+			print("-"*60)
+			
+		gmail.sendmail(email_from, email_to, header.as_string())
+		gmail.quit()
+		
+		
+
+	return Response(data)
+
+@api_view(['GET'])
+def getCursosDeProfesor(request):
+	prof = request.query_params.get('profesor')
+	cursosList = list(Curso.objects.filter(profesor=prof))
+	json = serializers.serialize('json', cursosList)
+	return HttpResponse(json, content_type='application/json')
+
+#Retorna el pk del profesor si existe
+#Si no existe retorna -1
+@api_view(['POST'])
+def validarUserPass(request):
+	body_unicode = request.body.decode('utf-8')
+	body = json.loads(body_unicode)
+	user = body["user"]
+	password = body["password"]
+	
+	try:
+		profesor = Profesor.objects.get(correo=user, matricula=password)
+		return JsonResponse({'pk':profesor.pk})
+	except Profesor.DoesNotExist:
+		return JsonResponse({'pk': -1})
+
+#retorna los estudiantes de un curso a partir de su id
+#Si no existe el curso o no tiene estudiantes retorna una lista vacia
+@api_view(['GET'])
+def getEstudiantesDeCurso(request):
+	curso = request.query_params.get('curso')
+	print(curso)
+	relacionEstudiantesList = list(ListaEstudiante.objects.filter(curso=curso))
+	print(relacionEstudiantesList)
+	estudiantesList = []
+	for relacion in relacionEstudiantesList:
+		if(relacion.estudiante not in estudiantesList):
+			estudiantesList.append(relacion.estudiante)
+			print(estudiantesList)
+	json = serializers.serialize('json', estudiantesList)
+	return HttpResponse(json, content_type='application/json')	
+	

@@ -1,0 +1,128 @@
+*** Starting uWSGI 2.0.18 (64bit) on [Mon Dec  2 03:53:00 2019] ***
+compiled with version: 7.2.1 20170915 (Red Hat 7.2.1-2) on 02 December 2019 02:58:56
+os: Linux-4.14.154-99.181.amzn1.x86_64 #1 SMP Sat Nov 16 01:38:34 UTC 2019
+nodename: ip-172-31-32-24
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 1
+current working directory: /home/ec2-user/tesis/SIESAC
+writing pidfile to SIESAC.uwsgi.pid
+detected binary path: /home/ec2-user/tesis/venv/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+your processes number limit is 3860
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18 (64bit) on [Mon Dec  2 04:22:16 2019] ***
+compiled with version: 7.2.1 20170915 (Red Hat 7.2.1-2) on 02 December 2019 02:58:56
+os: Linux-4.14.154-99.181.amzn1.x86_64 #1 SMP Sat Nov 16 01:38:34 UTC 2019
+nodename: ip-172-31-32-24
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 1
+current working directory: /home/ec2-user/tesis/SIESAC
+writing pidfile to SIESAC.uwsgi.pid
+detected binary path: /home/ec2-user/tesis/venv/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+your processes number limit is 3860
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000/profesor).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18 (64bit) on [Mon Dec  2 04:28:13 2019] ***
+compiled with version: 7.2.1 20170915 (Red Hat 7.2.1-2) on 02 December 2019 02:58:56
+os: Linux-4.14.154-99.181.amzn1.x86_64 #1 SMP Sat Nov 16 01:38:34 UTC 2019
+nodename: ip-172-31-32-24
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 1
+current working directory: /home/ec2-user/tesis/SIESAC
+writing pidfile to SIESAC.uwsgi.pid
+detected binary path: /home/ec2-user/tesis/venv/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+your processes number limit is 3860
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uWSGI http bound on 127.0.0.1:8000/profesor fd 4
+uwsgi socket 0 bound to TCP address 127.0.0.1:38939 (port auto-assigned) fd 3
+Python version: 3.6.8 (default, Oct 14 2019, 21:22:53)  [GCC 4.8.5 20150623 (Red Hat 4.8.5-28)]
+!!! Python Home is not a directory: venv !!!
+Set PythonHome to venv
+Fatal Python error: Py_Initialize: Unable to get the locale encoding
+ModuleNotFoundError: No module named 'encodings'
+
+Current thread 0x00007f3bfef43800 (most recent call first):
+*** Starting uWSGI 2.0.18 (64bit) on [Mon Dec  2 19:11:18 2019] ***
+compiled with version: 7.2.1 20170915 (Red Hat 7.2.1-2) on 02 December 2019 02:58:56
+os: Linux-4.14.154-99.181.amzn1.x86_64 #1 SMP Sat Nov 16 01:38:34 UTC 2019
+nodename: ip-172-31-32-24
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 1
+current working directory: /home/ec2-user/tesis/SIESAC
+writing pidfile to SIESAC.uwsgi.pid
+detected binary path: /home/ec2-user/tesis/venv/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+your processes number limit is 3860
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000/profesor).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18 (64bit) on [Mon Dec  2 19:12:46 2019] ***
+compiled with version: 7.2.1 20170915 (Red Hat 7.2.1-2) on 02 December 2019 02:58:56
+os: Linux-4.14.154-99.181.amzn1.x86_64 #1 SMP Sat Nov 16 01:38:34 UTC 2019
+nodename: ip-172-31-32-24
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 1
+current working directory: /home/ec2-user/tesis/SIESAC
+writing pidfile to SIESAC.uwsgi.pid
+detected binary path: /home/ec2-user/tesis/venv/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+your processes number limit is 3860
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.18 (64bit) on [Mon Dec  2 19:13:49 2019] ***
+compiled with version: 7.2.1 20170915 (Red Hat 7.2.1-2) on 02 December 2019 02:58:56
+os: Linux-4.14.154-99.181.amzn1.x86_64 #1 SMP Sat Nov 16 01:38:34 UTC 2019
+nodename: ip-172-31-32-24
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 1
+current working directory: /home/ec2-user/tesis/SIESAC
+writing pidfile to SIESAC.uwsgi.pid
+detected binary path: /home/ec2-user/tesis/venv/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+your processes number limit is 3860
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uWSGI http bound on 127.0.0.1:8000 fd 4
+uwsgi socket 0 bound to TCP address 127.0.0.1:34361 (port auto-assigned) fd 3
+Python version: 3.6.8 (default, Oct 14 2019, 21:22:53)  [GCC 4.8.5 20150623 (Red Hat 4.8.5-28)]
+!!! Python Home is not a directory: venv !!!
+Set PythonHome to venv
+Fatal Python error: Py_Initialize: Unable to get the locale encoding
+ModuleNotFoundError: No module named 'encodings'
+
+Current thread 0x00007fe3052a2800 (most recent call first):

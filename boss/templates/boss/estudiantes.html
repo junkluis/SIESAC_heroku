@@ -1,0 +1,89 @@
+{% extends 'boss/base.html' %}
+
+{% block estiloExtra %}
+<style>
+	.filtro-text{
+	    font-size: 18px;
+    	margin-top: 3px;
+	}
+</style>
+{% endblock %}
+
+{% block tituloPagina %}ESTUDIANTES{% endblock %}
+
+{% block contenidoPagina %}
+<div style="padding: 0px 0px 20px 0px;">
+	 
+	<div class ="col-md-1 filtro-text">Filtrar:</div>
+	<div class ="col-md-3"><input type="text" style="width: 100%" class="form-control tu-input-papu" onkeyup="filtrarEstudiantes()"></div>
+</div>
+
+<div class="row mt">
+  <div class="col-md-12">
+    <div class="content-panel">
+      <table class="table table-striped table-advance table-hover">
+        <h4></i> Lista de estudiantes</h4>
+        <hr>
+        <thead>
+          <tr>
+            <th><i class="fa fa-bullhorn"></i> Nombre</th>
+            <th class="hidden-phone"><i class="fa fa-question-circle"></i> Matricula</th>
+            <th><i class="fa fa-bookmark"></i> Codigo</th>
+            <th><i class=" fa fa-edit"></i> Carrera</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        	{% for estudiante in listaEstudiantes %}
+          <tr class="fila-estudiante">
+            <td class="nombre-estudiante">{{ estudiante.usuario.username }}</td>
+            <td>{{ estudiante.matricula }}</td>
+            <td>{{ estudiante.codigo }} </td>
+            <td class="carrera-estudiante">{{ estudiante.carrera }}</td>
+            <td>
+              <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
+              <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+              <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <!-- /content-panel -->
+  </div>
+  <!-- /col-md-12 -->
+</div>
+
+{% endblock %}
+
+
+
+{% block javascriptExtra %}
+<script type="text/javascript">
+
+	function filtrarEstudiantes(){
+
+		console.log($(".tu-input-papu").val());
+		valor = $(".tu-input-papu").val();
+		$(".fila-estudiante").hide();
+
+		$.each($(".nombre-estudiante"), function(index, value){
+			nombre = $(value).text();
+			if(nombre.search(valor) >= 0){
+				$(value).parents().show();
+			}
+			
+		});
+		$.each($(".carrera-estudiante"), function(index, value){
+			carrera = $(value).text();
+			if(carrera.search(valor) >= 0){
+				$(value).parents().show();
+			}
+			
+		});
+	}
+
+
+</script>
+{% endblock %}
